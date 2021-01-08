@@ -108,15 +108,6 @@ function Pause-Process {
                 $Host.UI.WriteErrorLine("ID needs to be a positive integer for this to work")
                 break
             }
-            #Assign output to variable, check variable in if statement
-            #Variable null if privilege isn't present
-            $privy = whoami /priv
-            $dbpriv = $privy -match "SeDebugPrivilege"
-
-            if (!$dbpriv) {
-            $Host.UI.WriteErrorLine("You do not have debugging privileges to pause any process")
-            break
-            }
 
             $ProcHandle = (Get-Process -Id $ID).Handle
             $DebuggerPresent = [IntPtr]::Zero
@@ -163,15 +154,6 @@ function UnPause-Process {
          if ($ID -le 0) {
              $Host.UI.WriteErrorLine("ID needs to be a positive integer for this to work")
              break
-         }
-        
-         #Variable null if privilege isn't present
-         $privy = whoami /priv
-         $dbpriv = $privy -match "SeDebugPrivilege"
-            
-         if (!$dbpriv) {
-            $Host.UI.WriteErrorLine("You do not have debugging privileges to unpause any process")
-            break
          }
     }
 
